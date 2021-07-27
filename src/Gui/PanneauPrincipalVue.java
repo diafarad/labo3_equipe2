@@ -1,221 +1,103 @@
 package Gui;
 
 /**
+ * Cette classe agit comme le panneau des vues principal en ayant notamment les
+ * gestionnaires d’action et les différents sous panneau des vues.
  *
+ * @author Daniel Dumitru
+ * @version ETE 2021 - TP3
  */
 
-import Commande.Invoker;
-import Commande.Translation;
-import Commande.Undo;
-import Commande.ZoomIn;
-import Commande.ZoomOut;
+import Commandes.*;
 import Gui.Vue.ImageVue;
+import Gui.Vue.MenuFenetre;
 import Gui.Vue.PerspectiveVue;
-import Gui.Vue.ThumbnailVue;
 import Gui.Vue.Vue;
 import Model.ImageModel;
 import Model.PerspectiveModel;
-import Observateur.PerspectiveObserver;
+import Observateurs.ImageObserver;
+import Observateurs.PerspectiveObserver;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
+
 
 public class PanneauPrincipalVue extends JPanel {
 
-    /**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-	
-	private static final int LIGNE_PANNEAUX_PRINCIPAL = 1;
-    private static final int COLONNE_PANNEAUX_PRINCIPAL = 2;
+    private static final String MENU_UNDO = "Annuler";
+    private static final String MENU_REDO = "Refaire";
+    private static final String MENU_SAVE = "Sauvegarder";
+    private static final String MENU_LOAD = "Charger";
 
-    //private ImageModel imageModel = ImageModel.getInstance();
-    
+    private static final int LIGNE_PANNEAUX_PRINCIPAL = 1;
+    private static final int COLONNE_PANNEAUX_PRINCIPAL = 3;
 
-    private ThumbnailVue thumbnailGauche = new ThumbnailVue();
-    private Vue imageCentre = new ImageVue();
-    private Vue perspectiveDroite = new PerspectiveVue();
+    private ImageModel modelThumbnailGauche = new ImageModel();
+    private PerspectiveModel modelPerspectiveCentre = new PerspectiveModel();
+    private PerspectiveModel modelPerspectiveDroite = new PerspectiveModel();
 
-    private JPanel sousPanneauCentre = new JPanel();
-    private JPanel sousPanneauDroite = new JPanel();
-    
-    ImageModel imageModel = ImageModel.getInstance();
-    PerspectiveModel perspectiveModel =  PerspectiveModel.getInstance();
+    private Vue thumbnailGauche = new ImageVue(this.modelThumbnailGauche);
+    private Vue perspectiveCentre = new PerspectiveVue(this.modelPerspectiveCentre);
+    private Vue perspectiveDroite = new PerspectiveVue(this.modelPerspectiveDroite);
 
-    private Invoker invoker;
-    
+    private JPanel jPanelPanneauEtMenu = new JPanel();
+
+    private JMenuBar menuBarre = new JMenuBar();
+
+    private MenuFenetre menu = new MenuFenetre(this.modelThumbnailGauche, this.modelPerspectiveCentre, this.modelPerspectiveDroite);
 
     //**************************************************************************
     //Constructeurs
 
-    /**
-     *
-     */
     public PanneauPrincipalVue() {
 
-        setLayout(new GridLayout(LIGNE_PANNEAUX_PRINCIPAL, COLONNE_PANNEAUX_PRINCIPAL));
+        //Pour avertir lors du changement
+        this.modelThumbnailGauche.ajouterObserver((ImageObserver) this.thumbnailGauche);
+        this.modelPerspectiveCentre.ajouterObserver((PerspectiveObserver) this.perspectiveCentre);
+        this.modelPerspectiveDroite.ajouterObserver((PerspectiveObserver) this.perspectiveDroite);
+
+        setLayout(new BorderLayout());
+        this.jPanelPanneauEtMenu.setLayout(new GridLayout(LIGNE_PANNEAUX_PRINCIPAL, COLONNE_PANNEAUX_PRINCIPAL));
+        barMenu();
         sousPanneauGauche();
         sousPanneauCentre();
-        sousPanneauDroit();
-        invoker = new Invoker();
+        sousPanneauDroite();
+        add(this.jPanelPanneauEtMenu, BorderLayout.CENTER);
+
     }
 
     //**************************************************************************
     //Méthodes
 
     /**
-     *
+     * Le sous panneau avec l'image par défaut
      */
     private void sousPanneauGauche() {
-    	//thumbnailGauche.setThumbnail(imageModel.getImage());
-        add(this.thumbnailGauche);
+
+        this.jPanelPanneauEtMenu.add(this.thumbnailGauche);
     }
 
     /**
-     *
+     * Le sous panneau avec la première perspective
      */
     private void sousPanneauCentre() {
-        
-        JButton zoomIn = new JButton(new ImageIcon("src/Ressources/zoomin.png"));
-        JButton zoomOut = new JButton(new ImageIcon("src/Ressources/zoomout.png"));
-        JButton undo = new JButton(new ImageIcon("src/Ressources/undo.png"));
-        JButton redo = new JButton(new ImageIcon("src/Ressources/redo.png"));
 
-        this.sousPanneauCentre.add(undo, BorderLayout.NORTH);
-        this.sousPanneauCentre.add(redo, BorderLayout.NORTH);
-        this.sousPanneauCentre.add(zoomIn, BorderLayout.NORTH);
-        this.sousPanneauCentre.add(zoomOut, BorderLayout.NORTH);
-
-        zoomIn.addActionListener((ActionEvent e) -> {	
-			//Invoke Command
-        	invoker.setCommande(new ZoomIn(imageModel));
-        	invoker.executeCommande();
-		});
-        
-        zoomOut.addActionListener((ActionEvent e) -> {
-        	//Invoke command
-        	invoker.setCommande(new ZoomOut(imageModel));
-        	invoker.executeCommande();
-        });
-        
-        undo.addActionListener((ActionEvent e) -> {
-        	//Invoke command
-        	invoker.setCommande(new Undo(imageModel));
-        	invoker.executeCommande();
-        });
-
-        this.sousPanneauCentre.add(this.imageCentre, BorderLayout.CENTER);
-
-        JButton right = new JButton(new ImageIcon("src/Ressources/right.png"));
-        JButton left = new JButton(new ImageIcon("src/Ressources/left.png"));
-        JButton top = new JButton(new ImageIcon("src/Ressources/top.png"));
-        JButton bottom = new JButton(new ImageIcon("src/Ressources/bottom.png"));
-        
-      
-        right.addActionListener((ActionEvent e) -> {	
-			//Invoke Command
-        	invoker.setCommande(new Translation(imageModel,1));
-        	invoker.executeCommande();
-		});
-        
-        left.addActionListener((ActionEvent e) -> {	
-			//Invoke Command
-        	invoker.setCommande(new Translation(imageModel,2));
-        	invoker.executeCommande();
-		});
-        
-        top.addActionListener((ActionEvent e) -> {	
-			//Invoke Command
-        	invoker.setCommande(new Translation(imageModel,3));
-        	invoker.executeCommande();
-		});
-        
-        bottom.addActionListener((ActionEvent e) -> {	
-			//Invoke Command
-        	invoker.setCommande(new Translation(imageModel,4));
-        	invoker.executeCommande();
-		});
-
-        this.sousPanneauCentre.add(right, BorderLayout.SOUTH);
-        this.sousPanneauCentre.add(left, BorderLayout.SOUTH);
-        this.sousPanneauCentre.add(top, BorderLayout.SOUTH);
-        this.sousPanneauCentre.add(bottom, BorderLayout.SOUTH);
-
-
-        add(this.sousPanneauCentre);
+        this.jPanelPanneauEtMenu.add(this.perspectiveCentre);
     }
 
     /**
-     *
+     * Le sous panneau avec la deuxième perspective
      */
-    private void sousPanneauDroit() {
+    private void sousPanneauDroite() {
 
-        this.perspectiveModel.getPersObservable().ajouterObserver((PerspectiveObserver) this.perspectiveDroite);
-
-        JButton zoomIn = new JButton(new ImageIcon("src/Ressources/zoomin.png"));
-        JButton zoomOut = new JButton(new ImageIcon("src/Ressources/zoomout.png"));
-        JButton undo = new JButton(new ImageIcon("src/Ressources/undo.png"));
-        JButton redo = new JButton(new ImageIcon("src/Ressources/redo.png"));
-
-        this.sousPanneauDroite.add(undo, BorderLayout.NORTH);
-        this.sousPanneauDroite.add(redo, BorderLayout.NORTH);
-        this.sousPanneauDroite.add(zoomIn, BorderLayout.NORTH);
-        this.sousPanneauDroite.add(zoomOut, BorderLayout.NORTH);
-
-        zoomIn.addActionListener((ActionEvent e) -> {	
-			//Invoke Command
-        	invoker.setCommande(new ZoomIn(perspectiveModel));
-        	invoker.executeCommande();
-		});
-        
-        zoomOut.addActionListener((ActionEvent e) -> {	
-			//Invoke Command
-        	invoker.setCommande(new ZoomOut(perspectiveModel));
-        	invoker.executeCommande();
-		});
-        
-
-        this.sousPanneauDroite.add(this.perspectiveDroite, BorderLayout.CENTER);
-
-        JButton right = new JButton(new ImageIcon("src/Ressources/right.png"));
-        JButton left = new JButton(new ImageIcon("src/Ressources/left.png"));
-        JButton top = new JButton(new ImageIcon("src/Ressources/top.png"));
-        JButton bottom = new JButton(new ImageIcon("src/Ressources/bottom.png"));
-        
-        right.addActionListener((ActionEvent e) -> {	
-			//Invoke Command
-        	invoker.setCommande(new Translation(perspectiveModel,1));
-        	invoker.executeCommande();
-        });
-        
-        left.addActionListener((ActionEvent e) -> {	
-			//Invoke Command
-        	invoker.setCommande(new Translation(perspectiveModel,2));
-        	invoker.executeCommande();
-
-        });
-        
-        top.addActionListener((ActionEvent e) -> {	
-			//Invoke Command
-        	invoker.setCommande(new Translation(perspectiveModel,3));
-        	invoker.executeCommande();
-
-        });
-        
-        bottom.addActionListener((ActionEvent e) -> {	
-			//Invoke Command
-        	invoker.setCommande(new Translation(perspectiveModel,4));
-        	invoker.executeCommande();
-        });
-
-        this.sousPanneauDroite.add(right, BorderLayout.SOUTH);
-        this.sousPanneauDroite.add(left, BorderLayout.SOUTH);
-        this.sousPanneauDroite.add(top, BorderLayout.SOUTH);
-        this.sousPanneauDroite.add(bottom, BorderLayout.SOUTH);
-
-        add(this.sousPanneauDroite);
+        this.jPanelPanneauEtMenu.add(this.perspectiveDroite);
     }
-    
+
+    /**
+     * Le menu avec certaines commandes
+     */
+    public void barMenu() {
+
+        add(this.menu, BorderLayout.NORTH);
+    }
 }

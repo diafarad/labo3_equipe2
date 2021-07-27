@@ -1,4 +1,4 @@
-package Observateur;
+package Observateurs;
 
 /**
  * Interface d'un observer
@@ -9,5 +9,5 @@ package Observateur;
 
 public interface ImageObserver {
 
-	 public void update();
+	 public void avertir();
 }

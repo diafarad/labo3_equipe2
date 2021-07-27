@@ -1,4 +1,4 @@
-package Observateur;
+package Observateurs;
 
 /**
  * Classe abstraite du patron Observable
@@ -10,17 +10,17 @@ package Observateur;
 
 import java.util.ArrayList;
 
-public class PerspectiveObservable {
+public abstract class ImageObservable {
 
     //Liste des observers
-    private ArrayList<PerspectiveObserver> observers = new ArrayList<PerspectiveObserver>();
+    private ArrayList<ImageObserver> observers = new ArrayList<ImageObserver>();
 
     /**
      * Méthode pour attacher un Observer
      *
      * @param observer
      */
-    public void ajouterObserver(PerspectiveObserver observer) {
+    public void ajouterObserver(ImageObserver observer) {
 
         observers.add(observer);
     }
@@ -35,7 +35,7 @@ public class PerspectiveObservable {
     /**
      * Méthode pour effacer tous les observers
      */
-    public void effacerObservers(){
+    public void effacerObservers() {
         observers.clear();
     }
 
@@ -44,8 +44,9 @@ public class PerspectiveObservable {
      */
     public void avertirLesObservers() {
 
-        for (PerspectiveObserver observer : observers)
-            observer.update();
+        for (ImageObserver observer : observers)
+            observer.avertir();
     }
 }
+
 

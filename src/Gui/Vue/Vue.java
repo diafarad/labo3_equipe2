@@ -1,46 +1,64 @@
 package Gui.Vue;
 
 /**
+ * Cette classe abstraite agit comme parent aux différents types de vues.
  *
+ * @author Daniel Dumitru
+ * @version ETE 2021 - TP3
  */
-import Model.ModelBase;
+
+import Model.ImageModel;
+import Model.PerspectiveModel;
 
 import javax.swing.*;
 import java.awt.*;
 
 public abstract class Vue extends JPanel {
-	private static final long serialVersionUID = 1L;
-	
-	private ModelBase model;
+
+    private static final int DIMENSION_PANNEAU_LARGEUR = 315;
+    private static final int DIMENSION_PANNEAU_HAUTEUR = 315;
+
+    private ImageModel modelThumbnail;
+    private PerspectiveModel modelPerspective;
+
     //*************************************************************************
     //Constructeurs
-    public Vue(ModelBase model){
-        this.model = model;
+    public Vue(ImageModel modelThumbnail) {
+        this.modelThumbnail = modelThumbnail;
     }
-    
-    public Vue(){
+
+    public Vue(PerspectiveModel perspectiveModel) {
+        this.modelPerspective = perspectiveModel;
     }
 
     //**************************************************************************
-    //M�thodes
-    public Dimension getPrefferedSize()
-    {
-        return new Dimension(300, 300);
+    //Méthodes
+
+    public Dimension getPrefferedSize() {
+
+        return new Dimension(DIMENSION_PANNEAU_LARGEUR, DIMENSION_PANNEAU_HAUTEUR);
     }
 
-    public Dimension getMinimumSize()
-    {
+    public Dimension getMinimumSize() {
         return getPrefferedSize();
     }
 
     //*************************************************************************
     //Getter et setter
 
-    public ModelBase getModel() {
-        return model;
+    public ImageModel getModelThumbnail() {
+        return modelThumbnail;
     }
 
-    public void setModel(ModelBase model) {
-        this.model = model;
+    public void setModelThumbnail(ImageModel modelThumbnail) {
+        this.modelThumbnail = modelThumbnail;
+    }
+
+    public PerspectiveModel getModelPerspective() {
+        return modelPerspective;
+    }
+
+    public void setModelPerspective(PerspectiveModel modelPerspective) {
+        this.modelPerspective = modelPerspective;
     }
 }

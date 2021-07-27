@@ -1,4 +1,4 @@
-package Observateur;
+package Observateurs;
 
 /**
  * Interface d'un observer
@@ -7,7 +7,7 @@ package Observateur;
  * @version ETE 2021 - TP3
  */
 
-public interface ThumbnailObserver {
+public interface PerspectiveObserver {
 
-	 public void update();
+    public void avertir();
 }
