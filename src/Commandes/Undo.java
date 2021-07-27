@@ -4,7 +4,11 @@
 package Commandes;
 
 
+import Model.ModelBase;
 import Model.PerspectiveModel;
+
+import javax.swing.plaf.synth.SynthTextAreaUI;
+import java.util.ArrayList;
 
 /**
  * @author diafara
@@ -15,24 +19,30 @@ import Model.PerspectiveModel;
 public class Undo extends Commandes {
 
     /**
-     * @param perspectiveModel
+     * @param listeModel
      */
-    public Undo(PerspectiveModel perspectiveModel) {
-        super(perspectiveModel);
+    public Undo(ArrayList<ModelBase> listeModel) {
+        super(listeModel);
     }
 
     @Override
     public void executer() {
 
-        if (getPerspectiveModel() != null && getCommandeHistory().sizeListeCommandes() != 0) {
+        if (getListeModel().size() != 0 && getCommandeHistory().sizeListeCommandes() > 0) {
 
             Commandes avant = getCommandeHistory().undo();
 
-            getPerspectiveModel().setPositionX(avant.getPerspectiveModel().getPositionX());
-            getPerspectiveModel().setPositionY(avant.getPerspectiveModel().getPositionY());
-            getPerspectiveModel().setZoom(avant.getPerspectiveModel().getZoom());
+            for (int i = 0; i < getListeModel().size(); i++) {
 
-            getPerspectiveModel().avertirLesObservers();
+                if(avant.getPerspectiveModel().getPositionJpanel().equals(((PerspectiveModel)getListeModel().get(i)).getPositionJpanel())){
+
+                    ((PerspectiveModel)getListeModel().get(i)).setPositionX(avant.getPerspectiveModel().getPositionX());
+                    ((PerspectiveModel)getListeModel().get(i)).setPositionY(avant.getPerspectiveModel().getPositionY());
+                    ((PerspectiveModel)getListeModel().get(i)).setZoom(avant.getPerspectiveModel().getZoom());
+
+                    ((PerspectiveModel)getListeModel().get(i)).avertirLesObservers();
+                }
+            }
         }
     }
 }

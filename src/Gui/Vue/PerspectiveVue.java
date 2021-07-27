@@ -12,6 +12,7 @@ import Commandes.Invoker;
 import Commandes.Translation;
 import Commandes.Undo;
 import Commandes.Zoom;
+import Gui.PanneauPrincipalVue;
 import Model.PerspectiveModel;
 import Observateurs.PerspectiveObserver;
 
@@ -76,7 +77,7 @@ public class PerspectiveVue extends Vue implements PerspectiveObserver {
         });
 
         undo.addActionListener((ActionEvent e) -> {
-            new Invoker(new Undo(getModelPerspective()));
+            new Invoker(new Undo(PanneauPrincipalVue.getListPerspective()));
         });
 
         add(this.jPanelImage, BorderLayout.CENTER);

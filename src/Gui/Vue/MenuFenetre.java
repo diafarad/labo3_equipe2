@@ -11,6 +11,7 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 
 import Commandes.*;
+import Gui.PanneauPrincipalVue;
 import Model.ImageModel;
 import Model.ModelBase;
 import Model.PerspectiveModel;
@@ -81,7 +82,7 @@ public class MenuFenetre extends JMenuBar {
         });
 
         menuUndo.addActionListener((ActionEvent e) -> {
-
+            new Invoker(new Undo(PanneauPrincipalVue.getListPerspective()));
         });
 
         menuRedo.addActionListener((ActionEvent e) -> {

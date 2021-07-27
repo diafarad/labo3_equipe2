@@ -20,10 +20,12 @@ public class PerspectiveModel extends PerspectiveObservable implements Serializa
     private double positionX = 0;
     private double positionY = 0;
 
+    private String positionJpanel;
+
     //**************************************************************************
     //Constructeurs
-    public PerspectiveModel() {
-
+    public PerspectiveModel(String positionJpanel) {
+            this.positionJpanel = positionJpanel;
     }
 
     //**************************************************************************
@@ -36,10 +38,11 @@ public class PerspectiveModel extends PerspectiveObservable implements Serializa
      */
     public PerspectiveModel clone()
     {
-        PerspectiveModel clone = new PerspectiveModel();
+        PerspectiveModel clone = new PerspectiveModel(this.positionJpanel);
         clone.setPositionX(this.getPositionX());
         clone.setPositionY(this.getPositionY());
         clone.setZoom(this.getZoom());
+        clone.setPositionJpanel(this.positionJpanel);
         return clone;
     }
 
@@ -76,5 +79,13 @@ public class PerspectiveModel extends PerspectiveObservable implements Serializa
 
     public void setPositionY(double positionY) {
         this.positionY = positionY;
+    }
+
+    public String getPositionJpanel() {
+        return positionJpanel;
+    }
+
+    public void setPositionJpanel(String positionJpanel) {
+        this.positionJpanel = positionJpanel;
     }
 }

@@ -7,7 +7,6 @@ package Commandes;
  * @version ETE 2021 - TP3
  */
 
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -49,4 +48,5 @@ public class CommandeHistory {
     public int sizeListeCommandes() {
         return history.size();
     }
+
 }
