@@ -51,6 +51,7 @@ public class Load extends Commandes {
                     ((ImageModel) getListeModel().get(i)).avertirLesObservers();
                 } else {
                     ((PerspectiveModel) getListeModel().get(i)).setSourceImage(file.getAbsolutePath());
+                    ((PerspectiveModel) getListeModel().get(i)).avertirLesObservers();
                 }
             }
         }

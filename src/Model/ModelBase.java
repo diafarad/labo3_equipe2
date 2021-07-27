@@ -1,12 +1,4 @@
-/**
- * 
- */
 package Model;
-
-
-import javax.swing.Icon;
-import javax.swing.JLabel;
-
 
 /**
  * @author diafara
@@ -15,5 +7,4 @@ import javax.swing.JLabel;
  * 15:16:14
  */
 public interface ModelBase {
-
 }

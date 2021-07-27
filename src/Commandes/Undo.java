@@ -7,7 +7,6 @@ package Commandes;
 import Model.ModelBase;
 import Model.PerspectiveModel;
 
-import javax.swing.plaf.synth.SynthTextAreaUI;
 import java.util.ArrayList;
 
 /**
