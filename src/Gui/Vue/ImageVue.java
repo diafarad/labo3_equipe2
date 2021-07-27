@@ -45,6 +45,7 @@ public class ImageVue extends Vue implements ImageObserver {
         super.paintComponent(g);
 
         try {
+            
             if (getModelThumbnail().getSourceImage() != null) {
                 Image image = ImageIO.read(new File(getModelThumbnail().getSourceImage()));
                 g.drawImage(image, POSITION_X_DEBUT, POSITION_Y_DEBUT, HAUTEUR_IMAGE_DEFAUT, LARGEUR_IMAGE_DEFAUT, this);

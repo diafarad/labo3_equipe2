@@ -8,7 +8,6 @@ package Gui;
  * @version ETE 2021 - TP3
  */
 
-import Commandes.*;
 import Gui.Vue.ImageVue;
 import Gui.Vue.MenuFenetre;
 import Gui.Vue.PerspectiveVue;
@@ -23,11 +22,6 @@ import java.awt.*;
 
 
 public class PanneauPrincipalVue extends JPanel {
-
-    private static final String MENU_UNDO = "Annuler";
-    private static final String MENU_REDO = "Refaire";
-    private static final String MENU_SAVE = "Sauvegarder";
-    private static final String MENU_LOAD = "Charger";
 
     private static final int LIGNE_PANNEAUX_PRINCIPAL = 1;
     private static final int COLONNE_PANNEAUX_PRINCIPAL = 3;

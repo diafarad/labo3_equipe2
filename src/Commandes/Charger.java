@@ -46,11 +46,11 @@ public class Charger extends Commandes {
             in.close();
             fileIn.close();
 
-        } catch (IOException i) {
-            i.printStackTrace();
-        } catch (ClassNotFoundException c) {
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException f) {
             System.out.println("Aucune perspective trouvée");
-            c.printStackTrace();
+            f.printStackTrace();
         }
     }
 
@@ -66,11 +66,15 @@ public class Charger extends Commandes {
 
             for (int i = 0; i < this.listePerspective.size(); i++) {
 
+                this.listePerspective.get(i).setSourceImage(this.listePerspectiveTemporaire.get(i).getSourceImage());
                 this.listePerspective.get(i).setPositionX(this.listePerspectiveTemporaire.get(i).getPositionX());
                 this.listePerspective.get(i).setPositionY(this.listePerspectiveTemporaire.get(i).getPositionY());
                 this.listePerspective.get(i).setZoom(this.listePerspectiveTemporaire.get(i).getZoom());
                 this.listePerspective.get(i).avertirLesObservers();
             }
+
+            this.getImageModel().setSourceImage(this.listePerspective.get(0).getSourceImage());
+            this.getImageModel().avertirLesObservers();
         }
     }
 }
