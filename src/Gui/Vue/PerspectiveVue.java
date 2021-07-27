@@ -131,6 +131,9 @@ public class PerspectiveVue extends Vue implements PerspectiveObserver {
 
         try {
             if (getModelPerspective().getSourceImage() != null) {
+                this.positionX = (int)getModelPerspective().getPositionX();
+                this.positionY = (int)getModelPerspective().getPositionY();
+                this.positionZoom = getModelPerspective().getZoom();
                 Image image = ImageIO.read(new File(getModelPerspective().getSourceImage()));
                 g.drawImage(image, (int) getModelPerspective().getPositionX(), (int) getModelPerspective().getPositionY() + MIN_Y, getModelPerspective().getZoom(), getModelPerspective().getZoom(), this);
             }
