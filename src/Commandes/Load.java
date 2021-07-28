@@ -26,6 +26,9 @@ public class Load extends Commandes {
         super(listeModel);
     }
 
+    /**
+     * Permet de choisir un image à partir de l'ordinateur
+     */
     @Override
     public void executer() {
         // TODO Auto-generated method stub

@@ -35,6 +35,8 @@ public class Charger extends Commandes {
     /**
      * Permet de charger les perspectives avec l’utilisation de la
      * sérialisation.
+     *
+     * Source : https://www.tutorialspoint.com/java/java_serialization.htm
      */
     private void chargerVues() {
 

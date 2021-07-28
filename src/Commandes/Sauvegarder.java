@@ -35,6 +35,8 @@ public class Sauvegarder extends Commandes {
     /**
      *Permet de sauvegarder les perspectives avec l’utilisation de la
      *sérialisation.
+     *
+     * Source : https://www.tutorialspoint.com/java/java_serialization.htm
      */
     private void sauvegarderVues() {
 
