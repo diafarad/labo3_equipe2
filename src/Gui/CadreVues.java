@@ -34,13 +34,13 @@ public class CadreVues extends JFrame implements Runnable {
     @Override
     public void run() {
 
-        configurerFrame();
+        configurerFenetre();
     }
 
     /**
      * Configurer la fenêtre
      */
-    public void configurerFrame() {
+    private void configurerFenetre() {
 
         //Dimension cadre
         setPreferredSize(new Dimension(CADRE_LARGEUR, CADRE_HAUTEUR));

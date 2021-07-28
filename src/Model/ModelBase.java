@@ -7,4 +7,6 @@ package Model;
  * 15:16:14
  */
 public interface ModelBase {
+
+    public String getSourceImage();
 }

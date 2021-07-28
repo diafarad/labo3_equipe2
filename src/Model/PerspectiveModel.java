@@ -49,8 +49,9 @@ public class PerspectiveModel extends PerspectiveObservable implements Serializa
     //**************************************************************************
     //Getter et setter
 
+    @Override
     public String getSourceImage() {
-        return sourceImage;
+        return this.sourceImage;
     }
 
     public void setSourceImage(String sourceImage) {

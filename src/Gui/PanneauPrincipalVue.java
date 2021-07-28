@@ -41,8 +41,6 @@ public class PanneauPrincipalVue extends JPanel {
 
     private JPanel jPanelPanneauEtMenu = new JPanel();
 
-    private JMenuBar menuBarre = new JMenuBar();
-
     private MenuFenetre menu = new MenuFenetre(this.modelThumbnailGauche, modelPerspectiveCentre, modelPerspectiveDroite);
 
     //**************************************************************************
@@ -95,7 +93,7 @@ public class PanneauPrincipalVue extends JPanel {
     /**
      * Le menu avec certaines commandes
      */
-    public void barMenu() {
+    private void barMenu() {
 
         add(this.menu, BorderLayout.NORTH);
     }

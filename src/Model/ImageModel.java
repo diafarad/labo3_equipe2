@@ -25,12 +25,12 @@ public class ImageModel extends ImageObservable implements Serializable, ModelBa
     //*************************************************************************
     //Getter et Setter
 
-
-    public String getSourceImage() {
-        return sourceImage;
-    }
-
     public void setSourceImage(String sourceImage) {
         this.sourceImage = sourceImage;
+    }
+
+    @Override
+    public String getSourceImage() {
+        return this.sourceImage;
     }
 }
